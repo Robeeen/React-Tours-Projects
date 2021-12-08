@@ -14,9 +14,16 @@ function App() {
 
   const  fetchTours = async () => {
     setLoading(true);
-    const response = await fetch(url);
-    const tours = response.json();
-    console.log(tours);
+    try {
+      const response = await fetch(url);
+      const tours = response.json();
+      setLoading(false);
+      setTours(tours);    
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  
   };
   useEffect(() => {
     fetchTours();
@@ -30,7 +37,7 @@ function App() {
   }
   return (
     <main>
-      <Tours />
+      <Tours tours={tours} />
     </main>
   );
 }
