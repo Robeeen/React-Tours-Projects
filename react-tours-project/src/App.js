@@ -1,10 +1,26 @@
 import React, { useState, useEffect} from 'react';
 import Loading from './Loading';
 import Tours from './Tours';
-const url = 'https://course-api.netlify.app/api/react-tours-project';
+const url = 'https://course-api.com/react-tours-project';
 function App() {
   const [loading, setLoading] = useState(true);
   const [tours, setTours] = useState([]);
+
+  //function 
+  //useEffect() hook accepts 2 arguments: useEffect(callback[, dependencies]);
+  //A functional React component uses props and/or state to calculate the output. 
+  //If the functional component makes calculations that don't target the output value, then these calculations are named side-effects.
+  //Examples of side-effects are fetch requests, manipulating DOM directly, using timer functions like setTimeout(), and more.
+
+  const  fetchTours = async () => {
+    setLoading(true);
+    const response = await fetch(url);
+    const tours = response.json();
+    console.log(tours);
+  };
+  useEffect(() => {
+    fetchTours();
+  }, []);
   if(loading){
     return (
       <main>
@@ -13,9 +29,9 @@ function App() {
     );
   }
   return (
-    <div>
-      <h2>Tour Blog by React</h2>
-    </div>
+    <main>
+      <Tours />
+    </main>
   );
 }
 
